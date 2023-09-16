@@ -121,55 +121,5 @@ router.post("/resendmail",async(req,res) => {
   
 });
 
-//......................................................................................
-//update data
-//find the prticular user to update data
-router.route("/update/:id").put(async (req, res)=>{
-    let userId = req.params.id;
-    const {fname, email, conno} = req.body;
-
-    const updateDoctor = {
-        fname,
-        email,
-        conno
-    }
-    const update = await Doctor.findByIdAndUpdate(userId, updateDoctor)
-    .then(() =>{
-      res.status(200).send({status: "User Updated"})
-}).catch((err) => {
-    console.log(err);
-    res.status(500).send({status: "error with updating data"});
-})
-})
-
-//login
-router.route("/login").post(async (req, res)=>{
-  try {
-    // check if the user exists
-    const doctor = await Doctor.findOne({ email: req.body.email });
-    if (doctor) {
-      //check if password matches
-      const result = req.body.password === doctor.password;
-      if (result) {
-        res.status(200).json("login succesful" );
-
-      } else {
-        res.status(400).json({ error: "password doesn't match" });
-      }
-    } else {
-      res.status(400).json({ error: "User doesn't exist" });
-    }
-  } catch (error) {
-    res.status(400).json({ error });
-  }
-});
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) return next();
-  res.redirect("/login");
-}
-
-
-
 module.exports = router;
 
