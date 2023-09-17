@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer');
 
 // Create a transporter object to send the email
 const transporter = nodemailer.createTransport({
-  service: 'Gmail', // Use the email service you want to use
+  service: 'Gmail', //email service 
   auth: {
-    user: 'medcaremails@gmail.com', // Replace with your email address
-    pass: 'ppjv mtjw rbzm rrde', // Replace with your email password
+    user: 'medcaremails@gmail.com', // Replaced with our email address
+    pass: 'ppjv mtjw rbzm rrde', // Replaced with our email password
   },
 });
 
@@ -25,7 +25,7 @@ function generateOTP() {
 router.post('/docreg', async (req, res) => {
   const {fname, email, conno, slmc, password } = req.body;
   const otp = generateOTP();
-  const otpExpiration = new Date(Date.now() + 1* 60 * 1000); // OTP expires in 5 minutes
+  const otpExpiration = new Date(Date.now() + 1* 60 * 1000); // OTP expires in 1 minutes
 
   try {
 // Save user to the database
@@ -92,8 +92,6 @@ router.post("/resendmail",async(req,res) => {
   try{
     const {fname, email, conno, slmc, password } = req.body;
 
-    
-   
     if (!fname || !email || !conno || !slmc ||!password){
       throw Error("Empty user details are not allowed");
     }else {
