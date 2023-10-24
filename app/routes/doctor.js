@@ -119,4 +119,35 @@ router.post("/resendmail",async(req,res) => {
   
 });
 
+// Doctor login
+router.route("/doclogin").post(async (req, res)=>{
+  const { email, password } = req.body;
+
+  try {
+    // Find the doctor user by email
+    const doctor = await Doctor.findOne({ email });
+
+    if (!doctor) {
+      return res.status(404).json({ message: 'Doctor not found.' });
+    }
+
+    if (password !== doctor.password) {
+      return res.status(401).json({ message: 'Invalid password.' });
+    }
+
+    // Generate a JWT token for the doctor
+    const token = jwt.sign({ userId: doctor._id, userType: 'doctor' }, secretKey, {
+    expiresIn: '1h', // Token expires in 1 hour (adjust as needed)
+    });
+
+    // Log a success message
+  return res.status(200).json({message:'Doctor login successful', token});
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Internal server error.' });
+  }
+});
+
+
 module.exports = router;
