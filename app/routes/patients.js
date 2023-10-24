@@ -20,7 +20,7 @@ function generateOTP() {
   return Math.floor(1000 + Math.random() * 9000).toString();
 }
 
-//reg doctor
+//register patient
 router.post('/patientreg', async (req, res) => {
   const { email } = req.body;
   const otp = generateOTP();
