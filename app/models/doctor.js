@@ -9,34 +9,36 @@ const doctorSchema = new Schema({
 
     fname : {
         type: String,
-        required: true,
-        
-    },
+},
     email : {
         type: String,
         required: true,
-        
+        unique:true
     },
     conno : {
         type: Number,
-        required: true
     },
+
     slmc : {
-        type: String,
-        required: true
-    },
+    type: String,
+   
+},
     password: {
         type: String,
-        required: true
-    },
+       
+},
     otp: {
         type: String,
         required: true,
-      },
+},
       otpExpiration: {
         type: Date,
-        required: true,
+        
       },
+      role: {
+        type: String,
+        default:"doctor"
+}
 });
 
 
